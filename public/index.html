@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code API Cost Estimator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Claude Code API Cost Estimator</h1>
+    <p id="meta" class="meta">Loading…</p>
+  </header>
+
+  <div class="page">
+  <div class="controls">
+    <label for="alt-select">Compare against:</label>
+    <select id="alt-select"></select>
+    <div class="spacer"></div>
+    <div class="theme-control">
+      <button type="button" id="theme-toggle" class="theme-toggle" role="switch" aria-label="Toggle light/dark theme">
+        <span class="theme-toggle-knob"></span>
+      </button>
+      <span id="theme-label" class="theme-label">Theme: Dark</span>
+    </div>
+  </div>
+
+  <div id="banners"></div>
+
+  <div class="table-wrap">
+    <table id="cost-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th class="num">Messages</th>
+          <th class="num">Input</th>
+          <th class="num">Output</th>
+          <th class="num">CacheRd</th>
+          <th class="num">CacheWr</th>
+          <th class="num">API $</th>
+          <th id="th-alt-cost" class="num alt-col">Alt $</th>
+          <th id="th-alt-delta-pct" class="num alt-col">Savings %</th>
+        </tr>
+      </thead>
+      <tbody id="cost-body"></tbody>
+      <tfoot id="cost-foot"></tfoot>
+    </table>
+  </div>
+
+  <div id="mapping-note"></div>
+  <div id="pricing-detail"></div>
+  </div>
+
+  <footer>MIT &copy; 2026 <a href="https://github.com/chrisjunlee" rel="noopener">chrisjunlee</a></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

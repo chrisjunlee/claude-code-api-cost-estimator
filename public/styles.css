@@ -1,0 +1,350 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Dark theme (default) ─────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+  --bg:               #0f1117;
+  --bg-surface:       #1e2533;
+  --bg-hover:         #1a2030;
+  --border:           #334155;
+  --border-strong:    #334155;
+  --text:             #e2e8f0;
+  --text-muted:       #94a3b8;
+  --text-dim:         #64748b;
+  --text-footer:      #475569;
+  --text-heading:     #f8fafc;
+  --text-model:       #c7d2fe;
+  --text-native:      #f8fafc;
+  --text-alt:         #a5b4fc;
+  --accent-focus:     #6366f1;
+  --saving-large:     #4ade80;
+  --saving:           #86efac;
+  --more-expensive:   #f87171;
+  --banner-promo-bg:  #1e2d1e;
+  --banner-promo-bd:  #4ade80;
+  --banner-promo-tx:  #86efac;
+  --banner-warn-bg:   #2d1e1e;
+  --banner-warn-bd:   #f87171;
+  --banner-warn-tx:   #fca5a5;
+}
+
+/* ── Light theme ──────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:               #f8fafc;
+  --bg-surface:       #f1f5f9;
+  --bg-hover:         #e2e8f0;
+  --border:           #e2e8f0;
+  --border-strong:    #cbd5e1;
+  --text:             #1e293b;
+  --text-muted:       #64748b;
+  --text-dim:         #94a3b8;
+  --text-footer:      #94a3b8;
+  --text-heading:     #0f172a;
+  --text-model:       #4338ca;
+  --text-native:      #0f172a;
+  --text-alt:         #4f46e5;
+  --accent-focus:     #6366f1;
+  --saving-large:     #15803d;
+  --saving:           #16a34a;
+  --more-expensive:   #dc2626;
+  --banner-promo-bg:  #f0fdf4;
+  --banner-promo-bd:  #16a34a;
+  --banner-promo-tx:  #15803d;
+  --banner-warn-bg:   #fef2f2;
+  --banner-warn-bd:   #dc2626;
+  --banner-warn-tx:   #991b1b;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: 18px;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 24px;
+  min-height: 100vh;
+  transition: background 0.15s, color 0.15s;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin: 0 0 6px;
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Page wrapper: shrinks to widest child (the table) so the
+   controls row's right edge aligns with the table's right edge ── */
+.page {
+  width: max-content;
+  max-width: 100%;
+}
+
+/* ── Controls row ─────────────────────────────────────────── */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.controls label {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.controls .spacer { flex: 1; }
+
+/* ── Sliding theme toggle (monochrome, inverts with theme) ── */
+.theme-toggle {
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  width: 52px;
+  height: 28px;
+  border-radius: 999px;
+  padding: 0;
+  background: var(--bg);
+  border: 2px solid var(--text);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.theme-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+/* aria-checked="true" = dark mode → knob on the right */
+.theme-toggle[aria-checked="true"] .theme-toggle-knob {
+  transform: translateX(24px);
+}
+.theme-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.theme-label {
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* ── Selects ──────────────────────────────────────────────── */
+select {
+  background: var(--bg-surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+select:focus { border-color: var(--accent-focus); }
+
+#alt-select { min-width: 280px; }
+#theme-select { min-width: 90px; }
+
+/* ── Banners ──────────────────────────────────────────────── */
+.banner {
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  border-left: 3px solid;
+}
+
+.banner-promo {
+  background: var(--banner-promo-bg);
+  border-color: var(--banner-promo-bd);
+  color: var(--banner-promo-tx);
+}
+
+.banner-warn {
+  background: var(--banner-warn-bg);
+  border-color: var(--banner-warn-bd);
+  color: var(--banner-warn-tx);
+}
+
+/* ── Table ────────────────────────────────────────────────── */
+.table-wrap { overflow-x: auto; }
+
+table {
+  width: auto;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+thead tr {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-strong);
+}
+
+thead th {
+  padding: 8px 5px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+thead th.num { text-align: right; }
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+tbody tr:hover { background: var(--bg-hover); }
+
+tbody td {
+  padding: 7px 5px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+tbody td.num { text-align: right; }
+
+tbody td.model-name {
+  font-weight: 500;
+  color: var(--text-model);
+}
+
+tbody td.tok {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+tbody td.cache { color: var(--text-dim); }
+
+tbody td.native-cost {
+  color: var(--text-native);
+  font-weight: 500;
+}
+
+tbody td.alt-cost,
+tfoot th.alt-cost {
+  color: var(--text-alt);
+  font-weight: 500;
+}
+
+
+td.saving-large, th.saving-large { color: var(--saving-large); font-weight: 600; }
+td.saving,       th.saving       { color: var(--saving); }
+td.more-expensive, th.more-expensive { color: var(--more-expensive); }
+
+/* ── Footer row ───────────────────────────────────────────── */
+tfoot .totals-row {
+  background: var(--bg-surface);
+  border-top: 2px solid var(--border-strong);
+}
+
+tfoot th {
+  padding: 8px 5px;
+  text-align: right;
+  font-weight: 700;
+  color: var(--text-heading);
+  white-space: nowrap;
+}
+
+tfoot th.model-name { text-align: left; color: var(--text-model); }
+tfoot th.tok        { color: var(--text-muted); font-size: 12px; }
+tfoot th.saving-large  { color: var(--saving-large); }
+tfoot th.saving        { color: var(--saving); }
+tfoot th.more-expensive { color: var(--more-expensive); }
+
+/* ── Mapping note ─────────────────────────────────────────── */
+#mapping-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+#mapping-note .mapping-row {
+  display: block;
+  padding-left: 12px;
+  white-space: nowrap;
+}
+
+#mapping-note .mapping-arrow { color: var(--text-dim); }
+#mapping-note .mapping-sku   { color: var(--text-model); font-weight: 500; }
+
+/* ── Pricing detail ───────────────────────────────────────── */
+#pricing-detail {
+  margin-top: 14px;
+}
+
+.rate-table {
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.rate-table th {
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+}
+
+.rate-table th.num { text-align: right; }
+
+.rate-table td {
+  padding: 5px 10px;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.rate-table td.num { text-align: right; }
+
+.rate-table tr.rate-claude td {
+  border-top: 1px solid var(--border);
+}
+
+.rate-table tr.rate-alt td {
+  color: var(--text-alt);
+}
+
+.rate-table .rate-delta {
+  margin-left: 6px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ── Page footer ──────────────────────────────────────────── */
+footer {
+  margin-top: 24px;
+  font-size: 10px;
+  color: var(--text-footer);
+  line-height: 1.6;
+  text-align: center;
+}
+footer a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+footer a:hover { color: var(--text-muted); }

@@ -1,0 +1,157 @@
+{
+  "currency": "USD",
+  "unit": "per_million_tokens",
+  "models": {
+    "claude-opus-4-7": {
+      "displayName": "Claude Opus 4.7",
+      "kind": "claude",
+      "tier": "premium",
+      "input": 15.00,
+      "output": 75.00,
+      "cache_write_5m": 18.75,
+      "cache_write_1h": 30.00,
+      "cache_read": 1.50,
+      "source": "https://www.anthropic.com/pricing"
+    },
+    "claude-opus-4-6": {
+      "displayName": "Claude Opus 4.6",
+      "kind": "claude",
+      "tier": "premium",
+      "input": 15.00,
+      "output": 75.00,
+      "cache_write_5m": 18.75,
+      "cache_write_1h": 30.00,
+      "cache_read": 1.50,
+      "source": "https://www.anthropic.com/pricing"
+    },
+    "claude-opus-4-5": {
+      "displayName": "Claude Opus 4.5",
+      "kind": "claude",
+      "tier": "premium",
+      "input": 15.00,
+      "output": 75.00,
+      "cache_write_5m": 18.75,
+      "cache_write_1h": 30.00,
+      "cache_read": 1.50,
+      "source": "https://www.anthropic.com/pricing"
+    },
+    "claude-sonnet-4-6": {
+      "displayName": "Claude Sonnet 4.6",
+      "kind": "claude",
+      "tier": "standard",
+      "input": 3.00,
+      "output": 15.00,
+      "cache_write_5m": 3.75,
+      "cache_write_1h": 6.00,
+      "cache_read": 0.30,
+      "source": "https://www.anthropic.com/pricing"
+    },
+    "claude-haiku-4-5": {
+      "displayName": "Claude Haiku 4.5",
+      "kind": "claude",
+      "tier": "fast",
+      "input": 1.00,
+      "output": 5.00,
+      "cache_write_5m": 1.25,
+      "cache_write_1h": 2.00,
+      "cache_read": 0.10,
+      "source": "https://www.anthropic.com/pricing"
+    },
+
+    "deepseek-v4-pro": {
+      "displayName": "DeepSeek V4-Pro",
+      "kind": "alt",
+      "input": 1.74,
+      "output": 3.48,
+      "cache_read": 0.0145,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+    "deepseek-v4-flash": {
+      "displayName": "DeepSeek V4-Flash",
+      "kind": "alt",
+      "input": 0.14,
+      "output": 0.28,
+      "cache_read": 0.0028,
+      "source": "https://api-docs.deepseek.com/quick_start/pricing"
+    },
+
+    "qwen3-max": {
+      "displayName": "Qwen3-Max",
+      "kind": "alt",
+      "provider": "Alibaba",
+      "tiers": [
+        { "max_input_tokens":  32000, "input": 1.20, "output":  6.00 },
+        { "max_input_tokens": 128000, "input": 2.40, "output": 12.00 },
+        { "max_input_tokens": 252000, "input": 3.00, "output": 15.00 }
+      ],
+      "notes": "Banded pricing by request context size. No public cache_read rate; falls back to band input rate.",
+      "source": "https://www.alibabacloud.com/help/en/model-studio/models"
+    },
+    "qwen3-plus": {
+      "displayName": "Qwen-Plus",
+      "kind": "alt",
+      "provider": "Alibaba",
+      "tiers": [
+        { "max_input_tokens":  256000, "input": 0.40, "output": 2.40 },
+        { "max_input_tokens": 1000000, "input": 0.50, "output": 3.00 }
+      ],
+      "notes": "Banded pricing by request context size. No public cache_read rate; falls back to band input rate.",
+      "source": "https://www.alibabacloud.com/help/en/model-studio/models"
+    },
+    "qwen3-flash": {
+      "displayName": "Qwen-Flash",
+      "kind": "alt",
+      "provider": "Alibaba",
+      "input": 0.10,
+      "output": 0.40,
+      "notes": "No public cache_read rate; falls back to input rate.",
+      "source": "https://www.alibabacloud.com/help/en/model-studio/models"
+    },
+
+    "kimi-k2.6": {
+      "displayName": "Kimi K2.6",
+      "kind": "alt",
+      "provider": "Moonshot",
+      "input": 0.95,
+      "output": 4.00,
+      "cache_read": 0.16,
+      "source": "https://platform.moonshot.ai/docs/pricing/chat"
+    },
+
+    "glm-4.6": {
+      "displayName": "GLM-4.6",
+      "kind": "alt",
+      "provider": "Zhipu Z.AI",
+      "input": 0.60,
+      "output": 2.20,
+      "cache_read": 0.11,
+      "source": "https://docs.z.ai/guides/overview/pricing"
+    }
+  },
+
+  "providers": {
+    "deepseek-v4": {
+      "displayName": "DeepSeek V4",
+      "tierMap": {
+        "premium":  "deepseek-v4-pro",
+        "standard": "deepseek-v4-flash",
+        "fast":     "deepseek-v4-flash"
+      }
+    },
+    "qwen3": {
+      "displayName": "Qwen3",
+      "tierMap": {
+        "premium":  "qwen3-max",
+        "standard": "qwen3-plus",
+        "fast":     "qwen3-flash"
+      }
+    }
+  },
+
+  "altOrder": [
+    "deepseek-v4",
+    "qwen3",
+    "kimi-k2.6",
+    "glm-4.6"
+  ]
+}

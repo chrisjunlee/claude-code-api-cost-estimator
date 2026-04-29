@@ -1,0 +1,35 @@
+{
+  "name": "claude-code-cost-compare",
+  "version": "0.1.0",
+  "description": "Scan your Claude Code sessions and compare API cost vs alternative providers (DeepSeek, Qwen, Kimi, GLM)",
+  "type": "module",
+  "bin": {
+    "claude-code-cost-compare": "bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "public/",
+    "pricing.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node bin/cli.mjs"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "anthropic",
+    "cost",
+    "pricing",
+    "deepseek",
+    "qwen",
+    "kimi",
+    "glm"
+  ]
+}
