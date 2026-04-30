@@ -14,6 +14,21 @@ npx claude-code-api-cost-estimator
 
 The CLI starts a small local web server (default port 3000) and opens your browser to a comparison matrix.
 
+If the browser doesn't open automatically (or you used `--no-open`), visit:
+
+```
+http://localhost:3000
+```
+
+Use a different port with `--port`:
+
+```bash
+npx claude-code-api-cost-estimator --port 4123
+# then open http://localhost:4123
+```
+
+Stop the server with `Ctrl+C` in the terminal where it's running.
+
 > Requires Node.js 18 or newer.
 
 If you'd rather clone and run:
