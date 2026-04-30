@@ -1,11 +1,20 @@
 {
-  "name": "claude-code-cost-compare",
+  "name": "claude-code-api-cost-estimator",
   "version": "0.1.0",
-  "description": "Scan your Claude Code sessions and compare API cost vs alternative providers (DeepSeek, Qwen, Kimi, GLM)",
+  "description": "Estimate your Claude Code historical usage cost on third-party API providers (DeepSeek, Qwen, Kimi, GLM)",
   "type": "module",
   "bin": {
-    "claude-code-cost-compare": "bin/cli.mjs"
+    "claude-code-api-cost-estimator": "bin/cli.mjs"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisjunlee/claude-code-api-cost-estimator.git"
+  },
+  "homepage": "https://github.com/chrisjunlee/claude-code-api-cost-estimator#readme",
+  "bugs": {
+    "url": "https://github.com/chrisjunlee/claude-code-api-cost-estimator/issues"
+  },
+  "author": "chrisjunlee",
   "files": [
     "bin/",
     "src/",

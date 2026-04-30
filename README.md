@@ -9,7 +9,7 @@ Scans your local Claude Code sessions, buckets token usage to each provider's ti
 ## Quick start
 
 ```bash
-npx github:chrisjunlee/claude-code-api-cost-estimator
+npx claude-code-api-cost-estimator
 ```
 
 The CLI starts a small local web server (default port 3000) and opens your browser to a comparison matrix.
@@ -19,7 +19,7 @@ The CLI starts a small local web server (default port 3000) and opens your brows
 If you'd rather clone and run:
 
 ```bash
-git clone https://github.com/<your-username>/claude-code-api-cost-estimator
+git clone https://github.com/chrisjunlee/claude-code-api-cost-estimator
 cd claude-code-api-cost-estimator
 node bin/cli.mjs
 ```
@@ -37,9 +37,9 @@ node bin/cli.mjs
 Examples:
 
 ```bash
-npx github:<your-username>/claude-code-api-cost-estimator --days 7
-npx github:<your-username>/claude-code-api-cost-estimator --port 4123 --no-open
-npx github:<your-username>/claude-code-api-cost-estimator --projects-dir /path/to/sessions
+npx claude-code-api-cost-estimator --days 7
+npx claude-code-api-cost-estimator --port 4123 --no-open
+npx claude-code-api-cost-estimator --projects-dir /path/to/sessions
 ```
 
 ## What it does
