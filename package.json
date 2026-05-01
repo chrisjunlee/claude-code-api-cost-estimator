@@ -1,7 +1,7 @@
 {
   "name": "claude-code-api-cost-estimator",
-  "version": "0.1.1",
-  "description": "Estimate your Claude Code historical usage cost on third-party API providers (DeepSeek, Qwen, Kimi, GLM)",
+  "version": "0.2.0",
+  "description": "Estimate your Claude Code historical usage cost on third-party API providers (DeepSeek, Qwen, Kimi, GLM, MiMo, MiniMax)",
   "type": "module",
   "bin": {
     "claude-code-api-cost-estimator": "bin/cli.mjs"

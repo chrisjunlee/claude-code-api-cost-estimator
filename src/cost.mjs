@@ -23,7 +23,8 @@ export function costForRequest(req, modelPricing) {
     baseOutput = modelPricing.output;
   }
 
-  const cacheReadRate   = modelPricing.cache_read    ?? baseInput;
+  const cacheReadRate   = modelPricing.cache_read
+    ?? (modelPricing.cache_read_pct != null ? baseInput * modelPricing.cache_read_pct : baseInput);
   const cacheWrite5mRate = modelPricing.cache_write_5m ?? baseInput;
   const cacheWrite1hRate = modelPricing.cache_write_1h ?? baseInput;
 

@@ -46,10 +46,37 @@ function initTheme() {
   });
 }
 
-function updateAltHeaders() {
-  const name = matrix.altMeta[selectedSku]?.displayName ?? selectedSku;
-  document.getElementById("th-alt-cost").textContent      = `${name} $`;
-  document.getElementById("th-alt-delta-pct").textContent = `Savings %`;
+function isAllMode() {
+  return selectedSku === "ALL";
+}
+
+function sortedAllSkus() {
+  return [...matrix.altOrder].sort(
+    (a, b) => (matrix.totals.alt[a]?.total$ ?? 0) - (matrix.totals.alt[b]?.total$ ?? 0)
+  );
+}
+
+function renderHeader() {
+  const row = document.getElementById("cost-head-row");
+  row.querySelectorAll("th.alt-col").forEach(el => el.remove());
+  if (isAllMode()) {
+    for (const sku of sortedAllSkus()) {
+      const th = document.createElement("th");
+      th.className = "num alt-col";
+      th.textContent = matrix.altMeta[sku]?.displayName ?? sku;
+      row.appendChild(th);
+    }
+  } else {
+    const name = matrix.altMeta[selectedSku]?.displayName ?? selectedSku;
+    const th1 = document.createElement("th");
+    th1.className = "num alt-col";
+    th1.textContent = `${name} $`;
+    row.appendChild(th1);
+    const th2 = document.createElement("th");
+    th2.className = "num alt-col";
+    th2.textContent = "Savings %";
+    row.appendChild(th2);
+  }
 }
 
 function buildDropdown() {
@@ -61,11 +88,15 @@ function buildDropdown() {
     opt.textContent = matrix.altMeta[sku].displayName;
     sel.appendChild(opt);
   }
+  const allOpt = document.createElement("option");
+  allOpt.value = "ALL";
+  allOpt.textContent = "ALL";
+  sel.appendChild(allOpt);
   selectedSku = matrix.altOrder[0];
   sel.value = selectedSku;
   sel.addEventListener("change", () => {
     selectedSku = sel.value;
-    updateAltHeaders();
+    renderHeader();
     renderAltColumns();
     renderBanners();
   });
@@ -74,7 +105,7 @@ function buildDropdown() {
 function renderBanners() {
   const container = document.getElementById("banners");
   container.innerHTML = "";
-  const meta = matrix.altMeta[selectedSku];
+  const meta = isAllMode() ? null : matrix.altMeta[selectedSku];
   if (meta?.valid_until) {
     const expires = new Date(meta.valid_until);
     const today   = new Date();
@@ -120,9 +151,6 @@ function makeRow(data, isTotals = false) {
   const tr = document.createElement("tr");
   if (isTotals) tr.className = "totals-row";
 
-  const altData = data.alt?.[selectedSku];
-  const pct = altData?.deltaPct ?? 0;
-
   const cells = [
     { val: (data.displayName ?? data.model).replace(/^Claude\s+/, ""), cls: "model-name" },
     { val: num.format(data.messages), cls: "num" },
@@ -131,9 +159,19 @@ function makeRow(data, isTotals = false) {
     { val: fmtTokens(data.tokens.cacheRead), cls: "num tok cache" },
     { val: fmtTokens(data.tokens.cacheWrite),cls: "num tok cache" },
     { val: usd.format(data.native.total$),   cls: "num native-cost" },
-    { val: altData ? usd.format(altData.total$)        : "—", cls: "num alt-col alt-cost" },
-    { val: altData ? fmtSavingsPct(altData.deltaPct)   : "—", cls: `num alt-col delta-pct ${savingsClass(pct)}` },
   ];
+
+  if (isAllMode()) {
+    for (const sku of sortedAllSkus()) {
+      const altData = data.alt?.[sku];
+      cells.push({ val: altData ? usd.format(altData.total$) : "—", cls: "num alt-col alt-cost" });
+    }
+  } else {
+    const altData = data.alt?.[selectedSku];
+    const pct = altData?.deltaPct ?? 0;
+    cells.push({ val: altData ? usd.format(altData.total$)      : "—", cls: "num alt-col alt-cost" });
+    cells.push({ val: altData ? fmtSavingsPct(altData.deltaPct) : "—", cls: `num alt-col delta-pct ${savingsClass(pct)}` });
+  }
 
   for (const { val, cls } of cells) {
     const el = document.createElement(tag);
@@ -200,6 +238,7 @@ function altRateForTier(detail, tier) {
 function renderPricingDetail() {
   const container = document.getElementById("pricing-detail");
   container.innerHTML = "";
+  if (isAllMode()) return;
   const detail = matrix.altPricingDetails?.[selectedSku];
   if (!detail || !matrix.claudeRates) return;
 
@@ -259,6 +298,7 @@ function renderPricingDetail() {
 function renderMappingNote() {
   const container = document.getElementById("mapping-note");
   container.innerHTML = "";
+  if (isAllMode()) return;
   const meta = matrix.altMeta[selectedSku];
   if (!meta?.tierModelNames) return;
 
@@ -296,7 +336,7 @@ async function init() {
       return;
     }
     buildDropdown();
-    updateAltHeaders();
+    renderHeader();
     renderRows();
     renderTotals();
     renderBanners();

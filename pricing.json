@@ -84,28 +84,31 @@
         { "max_input_tokens": 128000, "input": 2.40, "output": 12.00 },
         { "max_input_tokens": 252000, "input": 3.00, "output": 15.00 }
       ],
-      "notes": "Banded pricing by request context size. No public cache_read rate; falls back to band input rate.",
-      "source": "https://www.alibabacloud.com/help/en/model-studio/models"
+      "cache_read_pct": 0.10,
+      "notes": "Banded pricing by request context size. cache_read = 10% of band input rate (explicit Context Cache hit).",
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
     },
-    "qwen3-plus": {
-      "displayName": "Qwen-Plus",
+    "qwen3.5-plus": {
+      "displayName": "Qwen3.5-Plus",
       "kind": "alt",
       "provider": "Alibaba",
       "tiers": [
         { "max_input_tokens":  256000, "input": 0.40, "output": 2.40 },
         { "max_input_tokens": 1000000, "input": 0.50, "output": 3.00 }
       ],
-      "notes": "Banded pricing by request context size. No public cache_read rate; falls back to band input rate.",
-      "source": "https://www.alibabacloud.com/help/en/model-studio/models"
+      "cache_read_pct": 0.10,
+      "notes": "Banded pricing by request context size. cache_read = 10% of band input rate (explicit Context Cache hit).",
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
     },
-    "qwen3-flash": {
-      "displayName": "Qwen-Flash",
+    "qwen3.5-flash": {
+      "displayName": "Qwen3.5-Flash",
       "kind": "alt",
       "provider": "Alibaba",
       "input": 0.10,
       "output": 0.40,
-      "notes": "No public cache_read rate; falls back to input rate.",
-      "source": "https://www.alibabacloud.com/help/en/model-studio/models"
+      "cache_read": 0.01,
+      "notes": "Flat pricing. cache_read = 10% of input (explicit Context Cache hit).",
+      "source": "https://www.alibabacloud.com/help/en/model-studio/model-pricing"
     },
 
     "kimi-k2.6": {
@@ -115,17 +118,60 @@
       "input": 0.95,
       "output": 4.00,
       "cache_read": 0.16,
-      "source": "https://platform.moonshot.ai/docs/pricing/chat"
+      "notes": "Single SKU; thinking and non-thinking modes share pricing. No K2.7 exists as of 2026-05-01.",
+      "source": "https://platform.kimi.ai/docs/pricing/chat"
     },
 
-    "glm-4.6": {
-      "displayName": "GLM-4.6",
+    "glm-5.1": {
+      "displayName": "GLM-5.1",
       "kind": "alt",
       "provider": "Zhipu Z.AI",
-      "input": 0.60,
-      "output": 2.20,
-      "cache_read": 0.11,
+      "input": 1.40,
+      "output": 4.40,
+      "cache_read": 0.26,
+      "notes": "Single SKU in the 5.1 family (no Air/Flash/AirX 5.1 variants). Cache write currently free promo.",
       "source": "https://docs.z.ai/guides/overview/pricing"
+    },
+
+    "mimo-v2.5-pro": {
+      "displayName": "MiMo V2.5 Pro",
+      "kind": "alt",
+      "provider": "Xiaomi",
+      "input": 1.00,
+      "output": 3.00,
+      "cache_read": 0.20,
+      "source": "https://platform.xiaomimimo.com/"
+    },
+    "mimo-v2.5": {
+      "displayName": "MiMo V2.5",
+      "kind": "alt",
+      "provider": "Xiaomi",
+      "input": 0.40,
+      "output": 2.00,
+      "cache_read": 0.08,
+      "source": "https://platform.xiaomimimo.com/"
+    },
+
+    "minimax-m2.7-highspeed": {
+      "displayName": "MiniMax-M2.7-highspeed",
+      "kind": "alt",
+      "provider": "MiniMax",
+      "input": 0.60,
+      "output": 2.40,
+      "cache_read": 0.06,
+      "cache_write_5m": 0.375,
+      "notes": "Low-latency premium tier; 2x base price for faster inference.",
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo"
+    },
+    "minimax-m2.7": {
+      "displayName": "MiniMax-M2.7",
+      "kind": "alt",
+      "provider": "MiniMax",
+      "input": 0.30,
+      "output": 1.20,
+      "cache_read": 0.06,
+      "cache_write_5m": 0.375,
+      "source": "https://platform.minimax.io/docs/guides/pricing-paygo"
     }
   },
 
@@ -138,20 +184,38 @@
         "fast":     "deepseek-v4-flash"
       }
     },
-    "qwen3": {
-      "displayName": "Qwen3",
+    "qwen3.5": {
+      "displayName": "Qwen3.5",
       "tierMap": {
         "premium":  "qwen3-max",
-        "standard": "qwen3-plus",
-        "fast":     "qwen3-flash"
+        "standard": "qwen3.5-plus",
+        "fast":     "qwen3.5-flash"
+      }
+    },
+    "mimo-v2.5": {
+      "displayName": "MiMo V2.5",
+      "tierMap": {
+        "premium":  "mimo-v2.5-pro",
+        "standard": "mimo-v2.5",
+        "fast":     "mimo-v2.5"
+      }
+    },
+    "minimax-m2.7": {
+      "displayName": "MiniMax M2.7",
+      "tierMap": {
+        "premium":  "minimax-m2.7-highspeed",
+        "standard": "minimax-m2.7",
+        "fast":     "minimax-m2.7"
       }
     }
   },
 
   "altOrder": [
     "deepseek-v4",
-    "qwen3",
+    "qwen3.5",
     "kimi-k2.6",
-    "glm-4.6"
+    "glm-5.1",
+    "mimo-v2.5",
+    "minimax-m2.7"
   ]
 }
