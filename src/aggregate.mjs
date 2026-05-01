@@ -24,7 +24,7 @@ async function* walkJsonl(dir) {
   }
 }
 
-async function parseJsonl(filePath, cutoff, totals, fileCount) {
+async function parseJsonl(filePath, cutoff, totals, fileCount, seenReqIds) {
   const rl = createInterface({
     input: createReadStream(filePath, { encoding: "utf8" }),
     crlfDelay: Infinity,
@@ -38,6 +38,12 @@ async function parseJsonl(filePath, cutoff, totals, fileCount) {
     if (!model || model === "<synthetic>") continue;
     if (!obj.timestamp) continue;
     if (Date.parse(obj.timestamp) < cutoff) continue;
+
+    const reqId = obj.requestId;
+    if (reqId) {
+      if (seenReqIds.has(reqId)) continue;
+      seenReqIds.add(reqId);
+    }
 
     const usage = obj.message.usage ?? {};
     const cache_creation = usage.cache_creation ?? {};
@@ -75,6 +81,7 @@ export async function aggregate() {
   const cutoff      = Date.now() - windowMs;
   const totals      = {};
   const fileCount   = { n: 0 };
+  const seenReqIds  = new Set();
 
   let dirExists = true;
   try { await stat(projectsDir); }
@@ -83,7 +90,7 @@ export async function aggregate() {
   if (dirExists) {
     const tasks = [];
     for await (const filePath of walkJsonl(projectsDir)) {
-      tasks.push(parseJsonl(filePath, cutoff, totals, fileCount));
+      tasks.push(parseJsonl(filePath, cutoff, totals, fileCount, seenReqIds));
     }
     await Promise.all(tasks);
   }
